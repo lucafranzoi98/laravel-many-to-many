@@ -23,8 +23,8 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'title' => ['required', 'max:50'],
-            'image' => ['nullable'],
-            'description' => ['nullable', 'image']
+            'image' => ['nullable', 'image'],
+            'description' => ['nullable']
         ];
     }
 }

@@ -3,6 +3,15 @@
 @section('content')
     <h1>All Projects</h1>
 
+    <a class="btn btn-primary" href="{{ route('admin.projects.create') }}">Add Project</a>
+
+    @if (session('message'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <strong>Message: </strong> {{session('message')}}
+        </div>
+    @endif
+
     <div class="table-responsive">
         <table class="table table-light">
             <thead>
@@ -17,10 +26,16 @@
             <tbody>
                 @forelse ($projects as $project)
                     <tr>
-                        <td>{{$project->id}}</td>
-                        <td>{{$project->title}}</td>
-                        <td>{{$project->image}}</td>
-                        <td>{{$project->description}}</td>
+                        <td>{{ $project->id }}</td>
+                        <td>{{ $project->title }}</td>
+                        <td>
+                            @if ($project->image)
+                                <img width="100" src="{{asset('storage/' . $project->image)}}">
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                        <td>{{ $project->description }}</td>
                         <td>View/EditDelete</td>
                     </tr>
                 @empty
@@ -28,6 +43,6 @@
             </tbody>
         </table>
 
-        {{$projects->links('pagination::bootstrap-5')}}
+        {{ $projects->links('pagination::bootstrap-5') }}
     </div>
 @endsection

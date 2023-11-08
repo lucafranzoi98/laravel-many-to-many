@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1>All Projects</h1>
+    <h1 class="mt-3">All Projects</h1>
 
-    <a class="btn btn-primary" href="{{ route('admin.projects.create') }}">Add Project</a>
-
+    
     @if (session('message'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            <strong>Message: </strong> {{session('message')}}
-        </div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <strong>Message: </strong> {{ session('message') }}
+    </div>
     @endif
-
+    
+    <a class="btn btn-primary mb-3" href="{{ route('admin.projects.create') }}">Add Project</a>
     <div class="table-responsive">
         <table class="table table-light">
             <thead>
@@ -30,13 +30,19 @@
                         <td>{{ $project->title }}</td>
                         <td>
                             @if ($project->image)
-                                <img width="100" src="{{asset('storage/' . $project->image)}}">
+                                @if (str_contains($project->image, 'http'))
+                                    <img width="100" src="{{$project->image}}">
+                                @else
+                                    <img width="100" src="{{ asset('storage/' . $project->image) }}">
+                                @endif
                             @else
                                 N/A
                             @endif
                         </td>
                         <td>{{ $project->description }}</td>
-                        <td>View/EditDelete</td>
+                        <td>
+                            <a href="{{route('admin.projects.show', $project->slug)}}" class="btn btn-primary">View</a>
+                            EditDelete</td>
                     </tr>
                 @empty
                 @endforelse

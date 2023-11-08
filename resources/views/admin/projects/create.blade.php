@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1>Create new project</h1>
+    <h1 class="my-3">Create new project</h1>
 
     @if ($errors->any())
         <div class="alert alert-danger" role="alert">
@@ -11,13 +11,6 @@
                 @endforeach
             </ul>
         </div>
-
-        <script>
-            var alertList = document.querySelectorAll('.alert');
-            alertList.forEach(function(alert) {
-                new bootstrap.Alert(alert)
-            })
-        </script>
     @endif
 
     <div class="card">
@@ -41,8 +34,7 @@
 
                 <div class="mb-3">
                     <label for="image" class="form-label">Choose file</label>
-                    <input type="file" class="form-control" name="image" id="image" aria-describedby="fileHelpId">
-                    <div id="fileHelpId" class="form-text">Choose project image</div>
+                    <input type="file" class="form-control" name="image" id="image">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

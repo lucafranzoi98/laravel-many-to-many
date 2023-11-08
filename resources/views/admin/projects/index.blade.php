@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="mt-3">All Projects</h1>
+    <h1 class="my-3">All Projects</h1>
 
     
     @if (session('message'))
@@ -42,7 +42,8 @@
                         <td>{{ $project->description }}</td>
                         <td>
                             <a href="{{route('admin.projects.show', $project->slug)}}" class="btn btn-primary">View</a>
-                            EditDelete</td>
+                            <a href="{{route('admin.projects.edit', $project->slug)}}" class="btn btn-warning text-white">Edit</a>
+                            Delete</td>
                     </tr>
                 @empty
                 @endforelse

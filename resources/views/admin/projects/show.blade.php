@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="mt-3">
+    <h1 class="my-3">
         Project number: {{ $project->id }}</h1>
     <div class="table-responsive">
         <table class="table table-light">
@@ -32,5 +32,7 @@
                 </tr>
             </tbody>
         </table>
+
+        <a href="{{ route('admin.projects.index') }}" class="btn btn-primary">Return to all projects</a>
     </div>
 @endsection

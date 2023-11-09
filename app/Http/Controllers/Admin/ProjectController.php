@@ -78,6 +78,10 @@ class ProjectController extends Controller
             $val_data['image'] = $path;
         }
 
+        if (!Str::is($project->getOriginal('title'), $request->title)) {
+            $val_data['slug'] = $project->generateSlug($request->title);
+        }
+
         $project->update($val_data);
         return to_route('admin.projects.index')->with('message', 'Project edit successfully');;
     }

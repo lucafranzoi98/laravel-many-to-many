@@ -83,7 +83,7 @@ class ProjectController extends Controller
         }
 
         $project->update($val_data);
-        return to_route('admin.projects.index')->with('message', 'Project edit successfully');;
+        return to_route('admin.projects.index')->with('message', 'Project edit successfully');
     }
 
     /**

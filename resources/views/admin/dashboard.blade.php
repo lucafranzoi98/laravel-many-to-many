@@ -25,6 +25,7 @@
                                             <h5 class="card-title"><i class="fa-solid fa-desktop"></i> Projects</h5>
                                             <h6 class="card-subtitle mb-2 text-muted ">Stats</h6>
                                             <p class="card-text">Total number: {{$total_projects}}</p>
+                                            <a class="text-decoration-none btn btn-primary" href="{{ route('admin.projects.index') }}">See all projects</a>
                                         </div>
                                     </div>
                                 </div>

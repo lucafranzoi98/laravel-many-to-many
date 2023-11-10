@@ -19,27 +19,17 @@
                 @csrf
                 @method('PUT')
 
+                {{-- Title --}}
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" class="form-control @error('title') is-invalid @enderror" name="title"
-                        id="title" aria-describedby="helpId" placeholder="Type the project title"
-                        value="{{ $project->title }}" required maxlength="50">
-                    <small id="helpId" class="form-text text-muted">Type the project title (max: 50 characters)</small>
+                        id="title" value="{{ $project->title }}" required maxlength="50">
                     @error('title')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description"
-                        rows="3" placeholder="Type the project description">{{ $project->description }}</textarea>
-                    <small id="helpId" class="form-text text-muted">Type the project description</small>
-                    @error('description')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
+                {{-- Image --}}
                 <div class="mb-3 d-flex">
                     <div class="me-3">
                         <div class="mb-2">Actual image:</div>
@@ -61,6 +51,36 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                </div>
+
+                {{-- Description --}}
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description"
+                        rows="3">{{ $project->description }}</textarea>
+                    @error('description')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                {{-- Code Link --}}
+                <div class="mb-3">
+                    <label for="code_link" class="form-label">Code link</label>
+                    <input type="text" class="form-control @error('code_link') is-invalid @enderror" name="code_link"
+                        id="code_link" value="{{$project->code_link}}">
+                    @error('code_link')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                {{-- Preview Link --}}
+                <div class="mb-3">
+                    <label for="preview_link" class="form-label">Preview link</label>
+                    <input type="text" class="form-control @error('preview_link') is-invalid @enderror"
+                        name="preview_link" id="preview_link" value="{{$project->preview_link}}">
+                    @error('preview_link')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <a href="{{ route('admin.projects.index') }}" class="btn btn-danger">Don't save</a>

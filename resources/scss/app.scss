@@ -1,1 +1,6 @@
-@import '~bootstrap/scss/bootstrap'
+@use '/resources/scss/variables' as *;
+@import '~bootstrap/scss/bootstrap';
+
+*{
+    font-family: PierSans;
+}

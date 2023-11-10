@@ -25,7 +25,9 @@ class StoreProjectRequest extends FormRequest
         return [
             'title' => ['required', 'max:50'],
             'image' => ['nullable', 'image'],
-            'description' => ['nullable']
+            'description' => ['nullable'],
+            'code_link' => ['nullable'],
+            'preview_link' => ['nullable']
         ];
     }
 }

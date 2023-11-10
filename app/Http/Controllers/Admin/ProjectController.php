@@ -104,15 +104,15 @@ class ProjectController extends Controller
         return view('admin.projects.trash', compact('projects'));
     }
 
-    public function restore(Project $project)
+    public function restore($slug)
     {
-        $project->restore();
+        Project::withTrashed()->where('slug', $slug)->restore();
         return to_route('admin.projects.trash')->with('message', 'Project restored successfully');
     }
 
-    public function forceDelete(Project $project)
+    public function forceDelete($slug)
     {
-        $project->forceDelete();
-        return to_route('admin.projects.trash')->with('message', 'Project deleted permanently successfully');
+        Project::withTrashed()->where('slug', $slug)->forceDelete();
+        return to_route('admin.projects.trash')->with('message', 'Project deleted successfully');
     }
 }

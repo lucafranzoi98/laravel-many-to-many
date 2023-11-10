@@ -53,12 +53,91 @@
                             </div>
                         </td>
                         <td>
-                            <a class="btn btn-success me-2" href="{{ route('admin.projects.restore', $project->slug) }}">Restore</a>
-                            <a class="btn btn-danger" href="{{ route('admin.projects.forceDelete', $project->slug) }}">Delete</a>                            
+                            <div class="d-flex flex-column">
+                                {{-- Restore trigger --}}
+                                <button type="button" class="btn btn-sm mb-2 btn-success" data-bs-toggle="modal"
+                                    data-bs-target="#modalId-{{ $project->id }}">
+                                    Restore
+                                </button>
+
+                                <!-- Modal Body -->
+                                <div class="modal fade text-dark" id="modalId-{{ $project->id }}" tabindex="-1"
+                                    data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+                                    aria-labelledby="modalTitleId-{{ $project->id }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
+                                        role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalTitleId-{{ $project->id }}">Project id:
+                                                    {{ $project->id }}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Do you want to restore this project?
+                                                <div class="mt-2"><strong>Project title: {{ $project->title }}</strong>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <form action="{{ route('admin.projects.restore', $project->slug) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="btn btn-success">Restore</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- Delete trigger -->
+                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#modalId2-{{ $project->id }}">
+                                    Delete
+                                </button>
+
+                                <!-- Modal Body -->
+                                <div class="modal fade text-dark" id="modalId2-{{ $project->id }}" tabindex="-1"
+                                    data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+                                    aria-labelledby="modalTitleId-{{ $project->id }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
+                                        role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalTitleId-{{ $project->id }}">Project id:
+                                                    {{ $project->id }}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                This is a destructive operation, do you want to delete PERMANENTLY this
+                                                project?
+                                                <div class="mt-2"><strong>Project title: {{ $project->title }}</strong>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <form action="{{ route('admin.projects.forceDelete', $project->slug) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
 
                     </tr>
                 @empty
+                    <td>No projects</td>
                 @endforelse
             </tbody>
         </table>

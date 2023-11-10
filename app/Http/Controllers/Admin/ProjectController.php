@@ -91,10 +91,28 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        if (!is_null($project->image)) {
-            Storage::delete($project->image);
-        }
+        // if (!is_null($project->image)) {
+        //     Storage::delete($project->image);
+        // }
         $project->delete();
         return to_route('admin.projects.index')->with('message', 'Project deleted successfully!');
+    }
+
+    public function trash(Project $project)
+    {
+        $projects = Project::onlyTrashed()->orderByDesc('id')->paginate('10');
+        return view('admin.projects.trash', compact('projects'));
+    }
+
+    public function restore(Project $project)
+    {
+        $project->restore();
+        return to_route('admin.projects.trash')->with('message', 'Project restored successfully');
+    }
+
+    public function forceDelete(Project $project)
+    {
+        $project->forceDelete();
+        return to_route('admin.projects.trash')->with('message', 'Project deleted permanently successfully');
     }
 }

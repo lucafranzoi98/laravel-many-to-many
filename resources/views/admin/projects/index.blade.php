@@ -10,7 +10,14 @@
         </div>
     @endif
 
-    <a class="btn btn-primary mb-3" href="{{ route('admin.projects.create') }}">Add Project</a>
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-primary mb-3" href="{{ route('admin.projects.create') }}">Add Project</a>
+        <div>
+            <a class="btn btn-success mb-3" href="{{ route('admin.projects.index') }}">All projects</a>
+            <a class="btn btn-danger mb-3" href="{{ route('admin.projects.trash') }}">Trash</a>
+        </div>
+    </div>
+
     <div class="table-responsive">
         <table class="table table-light table-hover">
             <thead>
@@ -41,20 +48,27 @@
                         </td>
                         <td>{{ $project->description }}</td>
                         <td>
-                            <a href="{{$project->code_link}}" target="_blank" class="btn btn-sm btn-dark mb-2"><i class="fa-solid fa-code"></i></a>
-                            <a href="{{$project->preview_link}}" target="_blank" class="btn btn-sm btn-dark"><i class="fa-solid fa-link"></i></a>
+                            <div class="d-flex flex-column">
+                                <a href="{{ $project->code_link }}" target="_blank" class="btn btn-sm btn-dark mb-2"><i
+                                        class="fa-solid fa-code"></i></a>
+                                <a href="{{ $project->preview_link }}" target="_blank" class="btn btn-sm btn-dark"><i
+                                        class="fa-solid fa-link"></i></a>
+                            </div>
                         </td>
                         <td>
                             <div class="d-flex">
-                                <a href="{{ route('admin.projects.show', $project->slug) }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-magnifying-glass"></i></a>
-                                <a href="{{ route('admin.projects.edit', $project->slug) }}" class="btn btn-sm btn-warning text-white mx-2"><i class="fa-solid fa-pen-to-square"></i></a>
-    
+                                <a href="{{ route('admin.projects.show', $project->slug) }}"
+                                    class="btn btn-sm btn-primary"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                <a href="{{ route('admin.projects.edit', $project->slug) }}"
+                                    class="btn btn-sm btn-warning text-white mx-2"><i
+                                        class="fa-solid fa-pen-to-square"></i></a>
+
                                 <!-- Modal trigger button -->
                                 <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#modalId-{{ $project->id }}">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
-    
+
                                 <!-- Modal Body -->
                                 <div class="modal fade text-dark" id="modalId-{{ $project->id }}" tabindex="-1"
                                     data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
@@ -70,12 +84,14 @@
                                             </div>
                                             <div class="modal-body">
                                                 This is a destructive operation, do you want to delete this project?
-                                                <div class="mt-2"><strong>Project title: {{ $project->title }}</strong></div>
+                                                <div class="mt-2"><strong>Project title: {{ $project->title }}</strong>
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Close</button>
-                                                <form action="{{ route('admin.projects.destroy', $project->slug) }}" method="POST">
+                                                <form action="{{ route('admin.projects.destroy', $project->slug) }}"
+                                                    method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">Cancel</button>
@@ -85,6 +101,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </td>
                     </tr>
                 @empty
                 @endforelse

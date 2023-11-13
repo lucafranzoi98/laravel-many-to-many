@@ -63,11 +63,27 @@
                     @enderror
                 </div>
 
+                {{-- Type --}}
+                <div class="mb-3">
+                    <label for="type_id" class="form-label">Type</label>
+                    <select class="form-select @error('type_id') is-invalid @enderror" name="type_id" id="type_id">
+                        <option selected disabled>Select one</option>
+                        @forelse ($types as $type)
+                            <option value="{{ $type->id }}" {{ $type->id == old('type_id', $project->type_id) ? 'selected' : '' }}>{{ $type->name }} </option>
+                        @empty
+                            No types avaiable
+                        @endforelse
+                        @error('type_id')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </select>
+                </div>
+
                 {{-- Code Link --}}
                 <div class="mb-3">
                     <label for="code_link" class="form-label">Code link</label>
                     <input type="text" class="form-control @error('code_link') is-invalid @enderror" name="code_link"
-                        id="code_link" value="{{$project->code_link}}">
+                        id="code_link" value="{{ $project->code_link }}">
                     @error('code_link')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -77,7 +93,7 @@
                 <div class="mb-3">
                     <label for="preview_link" class="form-label">Preview link</label>
                     <input type="text" class="form-control @error('preview_link') is-invalid @enderror"
-                        name="preview_link" id="preview_link" value="{{$project->preview_link}}">
+                        name="preview_link" id="preview_link" value="{{ $project->preview_link }}">
                     @error('preview_link')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

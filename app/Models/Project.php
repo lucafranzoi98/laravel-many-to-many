@@ -12,7 +12,7 @@ class Project extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'slug', 'image', 'description', 'code_link', 'preview_link'];
+    protected $fillable = ['title', 'slug', 'image', 'description', 'type_id', 'code_link', 'preview_link'];
 
     public function generateSlug($title){
         return Str::slug($title, '-');

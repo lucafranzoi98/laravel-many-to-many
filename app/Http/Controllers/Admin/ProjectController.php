@@ -121,9 +121,11 @@ class ProjectController extends Controller
 
     public function forceDelete($slug)
     {
-        $project = Project::withTrashed()->where('slug', $slug);
+        $collection = Project::withTrashed()->where('slug', $slug)->get();
+        $project = $collection[0];
+        
         if ($project->technologies) {
-            $project->technologies->detach();
+            $project->technologies()->detach();
         }
         
         $project->forceDelete();

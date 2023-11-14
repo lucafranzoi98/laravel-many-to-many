@@ -15,6 +15,12 @@
         @endif
         <div class="card-body">
             <h5 class="card-title">{{ $project->title }}</h5>
+            <h6 class="card-subtitle text-muted mb-2">
+                @if ($project->type)
+                    {{$project->type->name}}
+                @else
+                    
+                @endif</h6>
             <p class="card-text">{{ $project->description }}</p>
             <div>
                 <span>Code link: </span>
@@ -24,6 +30,14 @@
                 <span>Preview link: </span>
                 <a href="{{ $project->preview_link }}" target="_blank" class="card-link">{{ $project->preview_link }}</a>
             </div>
+            <ul class="list-unstyled d-flex gap-1 mt-3">
+                @forelse ($project->technologies as $technology)
+                    <li class="badge bg-dark">{{ $technology->name }}</li>
+                @empty
+                    No tags
+                @endforelse
+            </ul>
+
         </div>
     </div>
 
@@ -34,8 +48,7 @@
         <a href="{{ route('admin.projects.edit', $project->slug) }}" class="btn btn-warning text-white">Edit</a>
 
         <!-- Modal trigger button -->
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-            data-bs-target="#modalId-{{ $project->id }}">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalId-{{ $project->id }}">
             Delete
         </button>
 

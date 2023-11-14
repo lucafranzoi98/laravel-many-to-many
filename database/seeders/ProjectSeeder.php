@@ -15,15 +15,15 @@ class ProjectSeeder extends Seeder
      */
     public function run(Faker $faker): void
     {
-        for ($i=0; $i < 30; $i++) { 
-            $project = new Project();
-            $project->title = $faker->text(50);
-            $project->slug = Str::slug($project->title, '-');
-            $project->image = $faker->imageUrl(category: 'web');
-            $project->description = $faker->text();
-            $project->code_link = $faker->url();
-            $project->preview_link = $faker->url();
-            $project->save();
-        }
+        // for ($i=0; $i < 30; $i++) { 
+        //     $project = new Project();
+        //     $project->title = $faker->text(50);
+        //     $project->slug = Str::slug($project->title, '-');
+        //     $project->image = $faker->imageUrl(category: 'web');
+        //     $project->description = $faker->text();
+        //     $project->code_link = $faker->url();
+        //     $project->preview_link = $faker->url();
+        //     $project->save();
+        // }
     }
 }

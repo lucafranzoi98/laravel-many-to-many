@@ -69,7 +69,9 @@
                     <select class="form-select @error('type_id') is-invalid @enderror" name="type_id" id="type_id">
                         <option selected disabled>Select one</option>
                         @forelse ($types as $type)
-                            <option value="{{ $type->id }}" {{ $type->id == old('type_id', $project->type_id) ? 'selected' : '' }}>{{ $type->name }} </option>
+                            <option value="{{ $type->id }}"
+                                {{ $type->id == old('type_id', $project->type_id) ? 'selected' : '' }}>{{ $type->name }}
+                            </option>
                         @empty
                             No types avaiable
                         @endforelse
@@ -77,6 +79,22 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </select>
+                </div>
+
+                {{-- Technologies --}}
+                <div class="form-label">Technologies</div>
+                <div class="btn-group mb-3" role="group" id="technologies">
+                    @forelse ($technologies as $technology)
+                        <input type="checkbox" class="btn-check" id="check-{{ $technology->id }}" name='technologies[]'
+                            value="{{ $technology->id }}" autocomplete="off" {{$project->technologies->contains($technology->id) ? 'checked' : ''}}>
+                        <label class="btn btn-outline-dark"
+                            for="check-{{ $technology->id }}">{{ $technology->name }}</label>
+                    @empty
+                        No technologies avaiable
+                    @endforelse
+                    @error('technology')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 {{-- Code Link --}}

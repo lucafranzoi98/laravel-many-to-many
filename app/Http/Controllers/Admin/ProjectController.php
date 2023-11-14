@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Controllers\Controller;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -27,7 +28,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -44,7 +46,8 @@ class ProjectController extends Controller
             $val_data['image'] = $path;
         }
 
-        Project::create($val_data);
+        $project = Project::create($val_data);
+        $project->technologies()->sync($request->technologies);
         return to_route('admin.projects.index')->with('message', 'Project created successfully');
     }
 
@@ -53,7 +56,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('admin.projects.show', compact('project'));
+        $technologies = Technology::all();
+        return view('admin.projects.show', compact('project', 'technologies'));
     }
 
     /**
@@ -62,7 +66,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -71,7 +76,7 @@ class ProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project)
     {
         $val_data = $request->validated();
-        
+
         if ($request->has('image')) {
             if ($project->image) {
                 Storage::delete($project->image);
@@ -86,6 +91,7 @@ class ProjectController extends Controller
         }
 
         $project->update($val_data);
+        $project->technologies()->sync($request->technologies);
         return to_route('admin.projects.index')->with('message', 'Project edit successfully');
     }
 
@@ -94,9 +100,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        // if (!is_null($project->image)) {
-        //     Storage::delete($project->image);
-        // }
+        if (!is_null($project->image)) {
+            Storage::delete($project->image);
+        }
         $project->delete();
         return to_route('admin.projects.index')->with('message', 'Project deleted successfully!');
     }
@@ -115,7 +121,12 @@ class ProjectController extends Controller
 
     public function forceDelete($slug)
     {
-        Project::withTrashed()->where('slug', $slug)->forceDelete();
+        $project = Project::withTrashed()->where('slug', $slug);
+        if ($project->technologies) {
+            $project->technologies->detach();
+        }
+        
+        $project->forceDelete();
         return to_route('admin.projects.trash')->with('message', 'Project deleted successfully');
     }
 }

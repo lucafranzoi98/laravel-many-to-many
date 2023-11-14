@@ -64,6 +64,22 @@
                     </select>
                 </div>
 
+                {{-- Technologies --}}
+                <div class="form-label">Technologies</div>                
+                <div class="btn-group mb-3" role="group" id="technologies">
+                    @forelse ($technologies as $technology)
+                        <input type="checkbox" class="btn-check" id="check-{{ $technology->id }}" name='technologies[]' value="{{ $technology->id }}" autocomplete="off">
+                        <label class="btn btn-outline-dark"
+                            for="check-{{ $technology->id }}">{{ $technology->name }}</label>
+                    @empty
+                        No technologies avaiable
+                    @endforelse
+                    @error('technology')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+
                 {{-- Code Link --}}
                 <div class="mb-3">
                     <label for="code_link" class="form-label">Code link</label>
